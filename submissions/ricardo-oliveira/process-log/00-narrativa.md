@@ -46,6 +46,11 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
   - As 12 contas são 18% do LTV e geraram 1.086 deals no período. Os 3 vendedores, somados, tocaram 643 deals no total. Não dá conta só com 3. Dá com o time inteiro da Celia (6 vendedores, uns 180 deals cada).
   - Nessas 12 contas, os 3 ganham 64,9% e os outros 64,1%. Mesma conversão, o que reforça o argumento de organização, não de performance.
 - LTV tier x produto: o mix é quase igual em todos os tiers. O que separa tier é frequência e porte: correlação de 0,86 entre LTV e número de deals, 0,76 com a receita da empresa, 0,68 com funcionários, e só 0,35 com ticket médio. A única relação de produto é fraca e negativa: quanto mais o mix da conta é MG Special, menor o LTV (-0,38). Isso vai direto pro ICP: porte da empresa é o melhor sinal de conta boa.
+- Hipótese minha: os deals sem conta são conta nova (new logo), então cada vendedor vive dois mundos, recompra em conta antiga e abertura de conta nova, e a prioridade é recompra primeiro porque quem já confia na gente fecha mais fácil. Pedi pra testar. Os dados não sustentam nenhuma das duas partes:
+  - Todo deal fechado (6.711) é de uma das 85 contas que já compram. Em 14 meses nenhuma conta nova fechou. Os 1.425 sem conta estão todos abertos e têm o mesmo mix de produto dos abertos com conta. A leitura mais segura é furo de cadastro (a conta é preenchida no fechamento), não new logo.
+  - Relação anterior não aumenta conversão: deal de produto que a conta já comprava ganha 61,5%, produto novo pra conta 67,9%. Parte disso é efeito da janela (972 deals fechados começaram antes de mar/2017, quando a gente ainda não enxerga compras anteriores), então o certo é dizer que os dados não mostram vantagem, nem pra um lado nem pro outro.
+  - Ajustei a regra: deal sem conta não é "conta nova", é "identificar a conta". Depois de identificada, vai pro dono da conta. Se não for nenhuma das 85, aí sim vira new logo.
+- Regra acordada: topo da lista é produto atrasado ou vencendo em até 30 dias com deal aberto pro mesmo produto na mesma conta. 280 pares, 518 dos 664 deals abertos com conta. Virou a coluna Priority ("Focus now") na planilha e entrou no SOP.
 
 ---
 

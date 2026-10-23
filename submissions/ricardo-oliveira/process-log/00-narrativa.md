@@ -34,12 +34,17 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
   - LTV por conta de 51,6 mil a 341 mil (mediana 111,5 mil). Três contas puxam o topo (Kan-code, Konex, Condax), o resto é uma curva suave. As 21 maiores somam 37% do LTV: não é 80/20. Tiers por quartil (A a partir de 140 mil, B 111,5 mil, C 85 mil, D abaixo), com os cortes em células que eu posso mudar.
   - O vendedor que mais fecha deals na conta é o mesmo que mais fatura nela em 47 de 85 contas. No geral, volume e valor são habilidades diferentes, como eu suspeitava: Anna Snelling é 4ª em deals e 18ª em receita (ticket médio 1.322), Versie Hillebrand é 5ª e 27ª; Elease Gluck é 26ª em deals e 16ª em receita (ticket 3.615).
   - Ciclo médio por produto quase não muda: de 48 a 55 dias, só o GTK 500 vai a 64 (15 deals). Na matriz vendedor x produto, várias células têm 1 a 3 deals, então a média ali é ruído até ter amostra mínima.
+- Troquei a planilha pra dólar (o dataset é em USD) e pedi os 3 produtos mais vendidos por conta, pra ver se conta Tier A compra um tipo de produto diferente. Resultado: o mix é quase o mesmo em todos os tiers. Tier A compra menos MG Special (16% dos deals contra 24% no Tier D) e concentra 9 dos 15 ganhos de GTK 500.
+- Levantei duas hipóteses de operação comercial: (1) os 3 vendedores que vendem GTK 500 virarem especialistas só nesse produto; (2) os outros virarem AEs com conta própria, pra acabar com até 29 vendedores na mesma conta. Antes de afirmar, pedi a mesma leitura pros perdidos. O que os dados disseram:
+  - GTK 500 é o produto mais caro (26.768 dólares), não de entrada. São 40 deals no pipeline inteiro, 12 contas compraram, e os 3 vendedores já cuidam de 37 dos 40. A especialização já existe na prática. Com 15 ganhos em 14 meses (400 mil dólares), um vendedor só de GTK 500 faturaria abaixo da média do time.
+  - Ter mais vendedores na conta não derruba a taxa de ganho: correlação de -0,01 entre número de vendedores e win rate da conta. Vendedor com 10+ deals fechados na mesma conta ganha 62,5%; com 1 a 4, 66,3%. O argumento pro modelo de AE por conta existe (coordenação, plano de conta, expansão pra série mais cara), mas não é conversão.
+  - Darcel Schlecht é o 1º em deals e em receita, mas tem win rate de 63,1%, igual à média. A vantagem dele é volume, não conversão. Win rate por vendedor vai de 55,0% a 70,4%; por produto, de 60% a 65%. Perdas acontecem mais rápido que ganhos (41,5 dias contra 51,8).
 
 ---
 
 ## Onde a IA errou e como corrigi
 
-_(preenchido ao longo do build)_
+- A fórmula de top 3 produtos voltava a linha de cabeçalho da QUERY no lugar do produto nº 1. O Claude achou o erro só quando montou a versão dos perdidos e corrigiu nas duas abas.
 
 ## O que eu adicionei que a IA sozinha não faria
 

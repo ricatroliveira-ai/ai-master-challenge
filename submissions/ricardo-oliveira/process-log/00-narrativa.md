@@ -62,6 +62,9 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 - Região: testei 29 combinações setor x região e 12 receita x região. Nenhuma foge do acaso; as três regiões ganham entre 62,6% e 63,9%. Um ICP só, não um por região. Isso responde a Etapa 3 do SOP.
 - Exceção que eu marquei: Condax tem 9 funcionários, 4,5 milhões de receita, fundada em 2017, e é Tier A com 105 ganhos. Ou é dado errado, ou é uma conta que foge da regra; fica sinalizada.
 - Consequência pro score: encaixe no ICP entra como valor em jogo e prioridade da conta, não como chance de ganhar.
+- Aprovei o ICP: um só, ICP 1 = receita de 3 bilhões ou mais ou setor software, ICP 2 = 1 a 3 bilhões, ICP 3 = abaixo de 1 bilhão. Regra de diferença real: 2 erros-padrão na taxa de ganho, 20% a mais de LTV com 5+ contas. Entrou no SOP e na planilha (cortes em células editáveis).
+- Perguntei se algum manager ou vendedor performa melhor em algum ICP. Aba ICP x Team. Na taxa de ganho, não: 0 de 18 combinações manager x ICP e 1 de 90 vendedor x ICP passam de 2 erros-padrão, menos do que o acaso produziria (uns 4). O ranking de um vendedor no ICP 1 quase não prevê o ranking dele no ICP 3 (correlação 0,39).
+- O que apareceu no lugar: o time do Dustin Brinkmann (Central, 5 vendedores) nunca teve um deal de GTXPro, em nenhum estágio, e 37% do pipeline dele é MG Special. Ele fatura 923 dólares por deal fechado em qualquer ICP, contra 1.400 a 1.840 dos outros. GTXPro é cerca de 35% da receita da empresa. Não é ICP, é acesso a produto ou treinamento no time. Vira recomendação.
 
 ---
 

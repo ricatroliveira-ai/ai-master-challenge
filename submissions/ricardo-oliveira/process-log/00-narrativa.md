@@ -34,7 +34,7 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
   - LTV por conta de 51,6 mil a 341 mil (mediana 111,5 mil). Três contas puxam o topo (Kan-code, Konex, Condax), o resto é uma curva suave. As 21 maiores somam 37% do LTV: não é 80/20. Tiers por quartil (A a partir de 140 mil, B 111,5 mil, C 85 mil, D abaixo), com os cortes em células que eu posso mudar.
   - O vendedor que mais fecha deals na conta é o mesmo que mais fatura nela em 47 de 85 contas. No geral, volume e valor são habilidades diferentes, como eu suspeitava: Anna Snelling é 4ª em deals e 18ª em receita (ticket médio 1.322), Versie Hillebrand é 5ª e 27ª; Elease Gluck é 26ª em deals e 16ª em receita (ticket 3.615).
   - Ciclo médio por produto quase não muda: de 48 a 55 dias, só o GTK 500 vai a 64 (15 deals). Na matriz vendedor x produto, várias células têm 1 a 3 deals, então a média ali é ruído até ter amostra mínima.
-- Troquei a planilha pra dólar (o dataset é em USD) e pedi os 3 produtos mais vendidos por conta, pra ver se conta Tier A compra um tipo de produto diferente. Resultado: o mix é quase o mesmo em todos os tiers. Tier A compra menos MG Special (16% dos deals contra 24% no Tier D) e concentra 9 dos 15 ganhos de GTK 500.
+- O dataset não traz moeda, só o número. Formatei os valores em dólar porque os clientes são internacionais (71 das 85 contas têm sede nos EUA e as outras 14 estão em 14 países diferentes). Depois pedi os 3 produtos mais vendidos por conta, pra ver se conta Tier A compra um tipo de produto diferente. Resultado: o mix é quase o mesmo em todos os tiers. Tier A compra menos MG Special (16% dos deals contra 24% no Tier D) e concentra 9 dos 15 ganhos de GTK 500.
 - Levantei duas hipóteses de operação comercial: (1) os 3 vendedores que vendem GTK 500 virarem especialistas só nesse produto; (2) os outros virarem AEs com conta própria, pra acabar com até 29 vendedores na mesma conta. Antes de afirmar, pedi a mesma leitura pros perdidos. O que os dados disseram:
   - GTK 500 é o produto mais caro (26.768 dólares), não de entrada. São 40 deals no pipeline inteiro, 12 contas compraram, e os 3 vendedores já cuidam de 37 dos 40. A especialização já existe na prática. Com 15 ganhos em 14 meses (400 mil dólares), um vendedor só de GTK 500 faturaria abaixo da média do time.
   - Ter mais vendedores na conta não derruba a taxa de ganho: correlação de -0,01 entre número de vendedores e win rate da conta. Vendedor com 10+ deals fechados na mesma conta ganha 62,5%; com 1 a 4, 66,3%. O argumento pro modelo de AE por conta existe (coordenação, plano de conta, expansão pra série mais cara), mas não é conversão.
@@ -68,7 +68,7 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 
 ## Etapa 4: replanejamento (23/10)
 
-- Tirei o MEDDPICC do score: seis das oito letras não têm dado nenhum no CRM. O que falta vira recomendação de campos pra RevOps, não chute.
+- No começo eu queria usar o MEDDPICC, porque é a metodologia que ajuda a avaliar um deal parado no pipeline e entender se ele é real ou só torcida. Mas o CRM não tem dado pra isso: seis das oito letras estão vazias. Deixei o MEDDPICC de lado, e o que falta vira recomendação de campos pra RevOps.
 - Estacionei os 1.425 deals sem conta. Primeiro resolvo os 664 com conta, por vendedor e por manager; depois volto pros sem conta.
 
 ## Etapa 5: carteira por vendedor (23/10)
@@ -98,7 +98,7 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 ## Onde a IA errou e como corrigi
 
 - A fórmula de top 3 produtos voltava a linha de cabeçalho da QUERY no lugar do produto nº 1. O Claude achou o erro só quando montou a versão dos perdidos e corrigiu nas duas abas.
-- O Claude explicou o ICP como "valor em dólar, não chance de fechar". Corrigi: ICP é quem é o cliente (desafios, comportamento, perfil). Valor é a evidência de qual perfil é melhor, não a definição.
+- O Claude descreveu o ICP pelo valor da conta. Corrigi: ICP é quem é o cliente (desafios, comportamento, perfil). O valor é a evidência de qual perfil compra melhor, não a definição.
 - O Claude disse que os especialistas de GTK ganham 60%. Era a taxa de todos os deals de GTK; a dos especialistas é 65,2%. Pegou na hora de montar a aba de KPIs.
 - Na conversa, misturei GTK 500 (o mais caro, 3 vendedores) com GTXPro (o que mais fatura, 24 vendedores). O Claude separou os dois com a tabela de preços antes de eu decidir em cima do produto errado.
 

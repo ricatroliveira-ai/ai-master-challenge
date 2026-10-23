@@ -54,6 +54,15 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 - Revisando o dataset, perguntei: como alguém sabe o produto e não sabe a conta? Pedi pra ver onde a falta de conta se concentra. Resultado: em lugar nenhum. Cerca de 68% dos deals abertos estão sem conta em todo recorte: Engaging 68%, Prospecting 67%, as três regiões entre 67% e 69%, os seis managers entre 66% e 70%, todos os produtos entre 65% e 70% (só o GTK 500, com 15 deals, fica em 53%), e todo mês de engajamento. Por vendedor vai de 61% a 90%, e os mais altos têm poucos deals.
 - Leitura: taxa igual em todo lugar não é desleixo de um vendedor ou de um time, é processo. Ou o CRM não exige conta na oportunidade aberta e ela só é preenchida no fechamento, ou a exportação perde o campo. Não dá pra saber qual pelos dados, e isso vira recomendação pra RevOps: conta obrigatória na criação da oportunidade, relatório semanal de deals sem conta por vendedor, e a ação "identificar a conta" na ferramenta até isso estar resolvido.
 
+## Etapa 3: ICP (23/10)
+
+- Trouxe accounts.csv e sales_teams.csv pra planilha (corrigindo `technolgy` e `Philipines`) e montei a aba ICP em fórmula: por receita, funcionários, setor, ano de fundação, subsidiária e sede, com taxa de ganho, deals ganhos por conta, LTV por conta, ticket e participação no total. Os cortes de faixa ficam em células que eu posso mudar. Conferido contra o código.
+- Taxa de ganho não muda com nenhum atributo da conta: fica entre 61% e 65% em todo corte, e nenhuma diferença passa de 2 erros-padrão. O ICP não prevê se o deal fecha.
+- O que muda é o valor: conta com receita de 3 bilhões ou mais vale 169 mil de LTV, contra 84 mil abaixo de 500 milhões. O dobro, e quase todo pela frequência (65,8 ganhos por conta contra 39,6), com ticket um pouco maior. Funcionários conta a mesma história (correlação 0,95 com receita, então basta um). Software se destaca (154 mil, 64 ganhos por conta). Subsidiária e sede fora dos EUA não mudam nada.
+- Região: testei 29 combinações setor x região e 12 receita x região. Nenhuma foge do acaso; as três regiões ganham entre 62,6% e 63,9%. Um ICP só, não um por região. Isso responde a Etapa 3 do SOP.
+- Exceção que eu marquei: Condax tem 9 funcionários, 4,5 milhões de receita, fundada em 2017, e é Tier A com 105 ganhos. Ou é dado errado, ou é uma conta que foge da regra; fica sinalizada.
+- Consequência pro score: encaixe no ICP entra como valor em jogo e prioridade da conta, não como chance de ganhar.
+
 ---
 
 ## Onde a IA errou e como corrigi

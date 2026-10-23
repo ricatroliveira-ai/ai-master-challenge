@@ -41,6 +41,11 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
   - Darcel Schlecht é o 1º em deals e em receita, mas tem win rate de 63,1%, igual à média. A vantagem dele é volume, não conversão. Win rate por vendedor vai de 55,0% a 70,4%; por produto, de 60% a 65%. Perdas acontecem mais rápido que ganhos (41,5 dias contra 51,8).
 - Pedi o ciclo médio por produto dentro de cada conta e um alerta de qual produto está chegando na "renovação". Não existe campo de contrato, então definimos a renovação como recompra: última compra ganha + intervalo médio entre compras daquele produto naquela conta. Resultado em 31/12/2017 (última data do dataset): 180 pares conta e produto atrasados, 203 vencendo em até 30 dias, 126 ainda não, 13 com uma compra só. Intervalo típico de recompra: 34 dias (mediana por par), mas irregular (coeficiente de variação 0,81), então a data prevista é uma estimativa, não um compromisso. 366 dos 522 pares já têm deal aberto com conta.
 - Achado lateral: os ganhos sobem no último mês de cada trimestre (mar 531, jun 531, set 503, dez 511, contra 280 a 450 nos outros meses). Fechamento de trimestre é o evento de urgência mais claro que o dataset tem.
+- Minha proposta de operação: os 3 vendedores que já venderam GTK 500 cuidam das 12 contas que compraram GTK 500, e o resto do time passa a ter carteira fixa de contas. O argumento não é que isso melhora conversão (os dados não mostram isso), é que também não piora, e organiza cadência e responsabilidade. Pedi pro Claude testar a parte do GTK antes de fechar. O que voltou:
+  - Os 3 (Elease, Markita, Rosalina) são todos do mesmo manager, Celia Rouche, região West. Vender GTK 500 é prática de um time, não de 3 pessoas soltas.
+  - As 12 contas são 18% do LTV e geraram 1.086 deals no período. Os 3 vendedores, somados, tocaram 643 deals no total. Não dá conta só com 3. Dá com o time inteiro da Celia (6 vendedores, uns 180 deals cada).
+  - Nessas 12 contas, os 3 ganham 64,9% e os outros 64,1%. Mesma conversão, o que reforça o argumento de organização, não de performance.
+- LTV tier x produto: o mix é quase igual em todos os tiers. O que separa tier é frequência e porte: correlação de 0,86 entre LTV e número de deals, 0,76 com a receita da empresa, 0,68 com funcionários, e só 0,35 com ticket médio. A única relação de produto é fraca e negativa: quanto mais o mix da conta é MG Special, menor o LTV (-0,38). Isso vai direto pro ICP: porte da empresa é o melhor sinal de conta boa.
 
 ---
 
@@ -50,4 +55,4 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 
 ## O que eu adicionei que a IA sozinha não faria
 
-_(preenchido ao longo do build)_
+- A leitura de operação comercial: carteira fixa por vendedor justificada por organização e cadência, assumindo abertamente que os dados não mostram ganho de conversão.

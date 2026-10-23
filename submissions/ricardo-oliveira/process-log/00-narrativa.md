@@ -90,7 +90,7 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 
 ## Etapa 7: prioridade do dia (23/10)
 
-- Ordem travada: (1) deal vivo em produto vencido ou vencendo em 30 dias, 75 deals; (2) os outros vivos, 7; (3) deals mais antigos em produto pouco vencido ou vencendo, 448, com os muito vencidos no fim como recuperação; (4) o resto, 127. Dentro de cada passo, tier de ICP e depois valor.
+- Ordem travada: (1) deal vivo em produto vencido ou vencendo em 30 dias, 75 deals; (2) os outros vivos, 14; (3) deals mais antigos em produto pouco vencido ou vencendo, 448, com os muito vencidos no fim como recuperação; (4) o resto, 127. Dentro de cada passo, tier de ICP e depois valor.
 - Primeira passada de segunda a sexta (cerca de 18 deals por vendedor). A lista é refeita todo dia.
 
 ---

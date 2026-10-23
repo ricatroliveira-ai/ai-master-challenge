@@ -19,6 +19,13 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 - Fork, clone e branch `submission/ricardo-oliveira` feitos pelo Claude Code com a credencial git que já estava configurada na minha máquina.
 - Pegadinha: o `.gitignore` do próprio repo ignora `submissions/`, e a regra do PR proíbe mexer em qualquer arquivo fora da minha pasta. Editar o `.gitignore` quebraria a regra. Solução: `git add -f` só na minha pasta.
 
+## Etapa 2: método e primeira pergunta pros dados (23/10)
+
+- Antes de qualquer código, defini o método e pedi pro Claude organizar num SOP: primeiro o ICP (quem compra, recompra e fica, por região se mudar), depois o MEDDPICC deal a deal, e só então a prioridade.
+- O Claude leu os CSVs e trouxe o que muda o plano: 68% dos deals abertos (1.425 de 2.089) não têm conta, região é o escritório do vendedor e não do cliente, e o CRM não tem nenhum campo de MEDDPICC além de aproximações.
+- Minha primeira pergunta no pipeline: quantas contas únicas, quantas ganhamos, quantas perdemos. Resposta: 85 contas, e as 85 têm deal ganho e deal perdido. Nenhuma conta só ganha ou só perde. Taxa de ganho por conta vai de 53% a 75% (mediana 63%, geral 63,2%).
+- Leitura: contar contas não separa nada. O ICP vai ter que sair da taxa de ganho, do ticket e da recompra por conta, não de "comprou ou não comprou".
+
 ---
 
 ## Onde a IA errou e como corrigi

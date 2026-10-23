@@ -66,12 +66,45 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 - Perguntei se algum manager ou vendedor performa melhor em algum ICP. Aba ICP x Team. Na taxa de ganho, não: 0 de 18 combinações manager x ICP e 1 de 90 vendedor x ICP passam de 2 erros-padrão, menos do que o acaso produziria (uns 4). O ranking de um vendedor no ICP 1 quase não prevê o ranking dele no ICP 3 (correlação 0,39).
 - O que apareceu no lugar: o time do Dustin Brinkmann (Central, 5 vendedores) nunca teve um deal de GTXPro, em nenhum estágio, e 37% do pipeline dele é MG Special. Ele fatura 923 dólares por deal fechado em qualquer ICP, contra 1.400 a 1.840 dos outros. GTXPro é cerca de 35% da receita da empresa. Não é ICP, é acesso a produto ou treinamento no time. Vira recomendação.
 
+## Etapa 4: replanejamento (23/10)
+
+- Tirei o MEDDPICC do score: seis das oito letras não têm dado nenhum no CRM. O que falta vira recomendação de campos pra RevOps, não chute.
+- Estacionei os 1.425 deals sem conta. Primeiro resolvo os 664 com conta, por vendedor e por manager; depois volto pros sem conta.
+
+## Etapa 5: carteira por vendedor (23/10)
+
+- Decisão minha: cada conta tem um dono, e cada vendedor vende o catálogo inteiro na sua carteira. O cliente não estranha a troca, porque de 8 a 29 vendedores já trabalhavam cada conta.
+- Primeira tentativa do Claude: carteiras de valor igual. Quebrava a comissão (Darcel Schlecht caía 71%, Violet Mclelland subia 162%). Refiz o critério: a carteira de cada um tem o tamanho do que ele ganhou nos últimos 14 meses, sem GTK 500. Todo mundo ficou entre -4% e +7%. Em 73 das 85 contas o dono já tinha ganhado deal ali.
+- Testei localização e setor como critério de distribuição. Nenhum dos dois prevê quem ganha: 8 combinações vendedor x setor fora do acaso, contra 8,9 esperadas só por acaso.
+- GTK 500 (o produto mais caro, 26.768 dólares) fica com os 3 especialistas, em cima de uma carteira menor, porque só GTK daria a eles bem menos que a média. KPIs com linha de base e regra de decisão depois de 2 a 3 trimestres na aba GTK 500 KPIs.
+- Cheguei a pensar em especializar o GTXPro também. Os dados derrubaram: 24 vendedores vendem GTXPro com a mesma taxa de ganho, e o time com mais volume (Melvin Marxen) tem a menor taxa. Fica só o treinamento do time do Dustin, vendendo junto com o time da Cara Losch por um trimestre.
+- 5 vendedores nunca tiveram deal, um em cada time menos o do Dustin. Proposta de ramp de 3 meses: acompanhar, vender junto, carteira pequena de ICP 3.
+- Os managers recebem a divisão como sugestão e podem reorganizar dentro do próprio time, com travas: carteira a no máximo 10% do que o vendedor ganhava, motivo escrito, uma semana, depois congela no trimestre. A planilha marca em vermelho o que sai da regra.
+
+## Etapa 6: redistribuir os deals abertos agora (23/10)
+
+- Não quis esperar os deals fecharem pra começar. Pedi pra reorganizar tudo já, sem machucar ninguém.
+- O dado que destravou: nenhum deal ganho na história levou mais de 138 dias. 412 dos 501 deals em Engaging com conta já passaram disso.
+- Regra final: os 82 deals vivos (até 138 dias) ficam com quem já está neles até ganhar ou perder. Os outros 549 vão hoje pro dono da conta; os passados do ciclo têm 30 dias pra voltar à vida ou ser fechados como perdidos. Daqui pra frente, só entra deal no CRM com conta, e só na conta que o vendedor é dono.
+- Testei se mexer nos deals vivos premiaria performance. Não: quem perderia e quem ganharia deals têm a mesma taxa de ganho (63,7% e 63,5%). Deixar os vivos parados é o que protege a comissão.
+
+## Etapa 7: prioridade do dia (23/10)
+
+- Ordem travada: (1) deal vivo em produto vencido ou vencendo em 30 dias, 75 deals; (2) os outros vivos, 7; (3) deals mais antigos em produto pouco vencido ou vencendo, 448, com os muito vencidos no fim como recuperação; (4) o resto, 127. Dentro de cada passo, tier de ICP e depois valor.
+- Primeira passada de segunda a sexta (cerca de 18 deals por vendedor). A lista é refeita todo dia.
+
 ---
 
 ## Onde a IA errou e como corrigi
 
 - A fórmula de top 3 produtos voltava a linha de cabeçalho da QUERY no lugar do produto nº 1. O Claude achou o erro só quando montou a versão dos perdidos e corrigiu nas duas abas.
+- O Claude explicou o ICP como "valor em dólar, não chance de fechar". Corrigi: ICP é quem é o cliente (desafios, comportamento, perfil). Valor é a evidência de qual perfil é melhor, não a definição.
+- O Claude disse que os especialistas de GTK ganham 60%. Era a taxa de todos os deals de GTK; a dos especialistas é 65,2%. Pegou na hora de montar a aba de KPIs.
+- Na conversa, misturei GTK 500 (o mais caro, 3 vendedores) com GTXPro (o que mais fatura, 24 vendedores). O Claude separou os dois com a tabela de preços antes de eu decidir em cima do produto errado.
 
 ## O que eu adicionei que a IA sozinha não faria
 
 - A leitura de operação comercial: carteira fixa por vendedor justificada por organização e cadência, assumindo abertamente que os dados não mostram ganho de conversão.
+- "Ninguém pode perder comissão" como regra de desenho. Foi isso que mudou o critério das carteiras e a regra dos deals vivos.
+- Reorganizar agora em vez de esperar o pipeline zerar, e travar o CRM pra só aceitar deal em conta própria.
+- Dar aos managers a palavra final dentro do time, com travas, em vez de impor a divisão.

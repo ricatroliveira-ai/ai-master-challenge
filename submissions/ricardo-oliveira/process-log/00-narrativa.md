@@ -27,6 +27,7 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 - Leitura: contar contas não separa nada. O ICP vai ter que sair da taxa de ganho, do ticket e da recompra por conta, não de "comprou ou não comprou".
 - Minha hipótese seguinte: o jogo é upsell e cross-sell na mesma conta. Pedi pro Claude testar antes de assumir. Resultado: não é bem isso. Toda conta já comprou 6 ou 7 dos 7 produtos, e 88% dos ganhos (3.716 de 4.238) são recompra de um produto que a conta já tinha. É um motion de recompra em alto volume (mediana de 83 deals por conta em 14 meses), não de expansão. Ressalva: os fechamentos só começam em mar/2017, então a primeira compra de cada conta pode ser anterior à janela.
 - Achado de RevOps que eu não esperava: mediana de 14 vendedores diferentes trabalhando a mesma conta. Não existe dono de conta.
+- Subi o pipeline numa Google Sheet pra olhar com meus próprios olhos e criei a coluna `sales_cycle_days` (close_date menos engage_date). Pedi pro Claude abrir uma aba por estágio (Won 4.238, Lost 2.473, Engaging 1.589, Prospecting 500) com FILTER sobre a aba original, pra ver o funil etapa por etapa sem duplicar dado. Ele conferiu as contagens contra o CSV e apontou que minha coluna de ciclo quebra nos deals abertos (sem close_date a conta fica negativa e aparece como data de 1782).
 
 ---
 

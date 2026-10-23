@@ -25,6 +25,8 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 - O Claude leu os CSVs e trouxe o que muda o plano: 68% dos deals abertos (1.425 de 2.089) não têm conta, região é o escritório do vendedor e não do cliente, e o CRM não tem nenhum campo de MEDDPICC além de aproximações.
 - Minha primeira pergunta no pipeline: quantas contas únicas, quantas ganhamos, quantas perdemos. Resposta: 85 contas, e as 85 têm deal ganho e deal perdido. Nenhuma conta só ganha ou só perde. Taxa de ganho por conta vai de 53% a 75% (mediana 63%, geral 63,2%).
 - Leitura: contar contas não separa nada. O ICP vai ter que sair da taxa de ganho, do ticket e da recompra por conta, não de "comprou ou não comprou".
+- Minha hipótese seguinte: o jogo é upsell e cross-sell na mesma conta. Pedi pro Claude testar antes de assumir. Resultado: não é bem isso. Toda conta já comprou 6 ou 7 dos 7 produtos, e 88% dos ganhos (3.716 de 4.238) são recompra de um produto que a conta já tinha. É um motion de recompra em alto volume (mediana de 83 deals por conta em 14 meses), não de expansão. Ressalva: os fechamentos só começam em mar/2017, então a primeira compra de cada conta pode ser anterior à janela.
+- Achado de RevOps que eu não esperava: mediana de 14 vendedores diferentes trabalhando a mesma conta. Não existe dono de conta.
 
 ---
 

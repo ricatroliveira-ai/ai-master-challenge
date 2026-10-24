@@ -2,9 +2,9 @@
 
 ## Sobre mim
 
-- **Nome:**
-- **LinkedIn:**
-- **Challenge escolhido:**
+- **Nome:** Ricardo Trevizan Rodrigues de Oliveira
+- **LinkedIn:** https://www.linkedin.com/in/ricatroliveira/
+- **Challenge escolhido:** 003	Lead Scorer
 
 ---
 

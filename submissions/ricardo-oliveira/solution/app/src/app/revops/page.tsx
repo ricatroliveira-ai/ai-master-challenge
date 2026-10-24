@@ -47,7 +47,7 @@ export default async function Revops({ searchParams }: PageProps<"/revops">) {
         <KpiTile label="Deals abertos nas carteiras" value={String(sum(M.carteiras))} hint="deals com conta que ficam com eles depois da redistribuição proposta" />
         <KpiTile label="Pra trabalhar agora" value={String(sum(M.p1) + sum(M.p2))} hint="deals limpos e vivos (passos 1 e 2)" />
         <KpiTile label="Pra requalificar" value={String(sum(M.p3))} hint="deals antigos em conta na hora de recomprar (passo 3)" />
-        <KpiTile label="Pra encerrar" value={String(sum("Encerrar"))} hint="a conta já comprou o produto de outro vendedor depois de o deal abrir" />
+        <KpiTile label="Pra confirmar" value={String(sum(M.confirmar))} hint="outro vendedor fechou o mesmo produto na conta depois de o deal abrir: mesmo pedido ou demanda separada?" />
         <KpiTile label="Recompra sem deal" value={String(recompra.length)} hint={`contas na hora de recomprar sem nenhum deal aberto · fila sem conta: ${sum(M.fila)}`} />
       </section>
 
@@ -56,7 +56,7 @@ export default async function Revops({ searchParams }: PageProps<"/revops">) {
           <thead className="bg-navy text-offwhite text-left">
             <tr>
               <th className="p-2">Vendedor</th><th className="p-2">Manager</th><th className="p-2">Região</th><th className="p-2">Taxa</th><th className="p-2">vs recorte</th><th className="p-2">Abertos hoje</th><th className="p-2">Nas carteiras</th><th className="p-2">Na lista</th>
-              <th className="p-2">P1</th><th className="p-2">P2</th><th className="p-2">P3</th><th className="p-2">P4</th><th className="p-2">Encerrar</th><th className="p-2">Fila</th><th className="p-2">Carteira vs passado</th><th className="p-2">Alerta</th>
+              <th className="p-2">P1</th><th className="p-2">P2</th><th className="p-2">P3</th><th className="p-2">P4</th><th className="p-2">Confirmar</th><th className="p-2">Fila</th><th className="p-2">Carteira vs passado</th><th className="p-2">Alerta</th>
             </tr>
           </thead>
           <tbody>
@@ -68,7 +68,7 @@ export default async function Revops({ searchParams }: PageProps<"/revops">) {
                 <td className="p-2">{(() => { const kp = kpiDe(str(t[M.vendedor])); if (!kp || num(kp[K.fechados]) === 0) return ""; const dlt = num(kp[K.taxa]) - tTime; return <span className={`tag ${dlt >= 0 ? "tag-ok" : "tag-bad"}`}>{pontos(dlt)}</span>; })()}</td>
                 <td className="p-2">{str(t[M.hojeComoEsta])}</td><td className="p-2">{str(t[M.carteiras])}</td><td className="p-2 font-bold">{str(t[M.naLista])}</td>
                 <td className="p-2">{str(t[M.p1])}</td><td className="p-2">{str(t[M.p2])}</td><td className="p-2">{str(t[M.p3])}</td><td className="p-2">{str(t[M.p4])}</td>
-                <td className="p-2">{str(t["Encerrar"])}</td>
+                <td className="p-2">{str(t[M.confirmar])}</td>
                 <td className="p-2">{str(t[M.fila])}</td>
                 <td className="p-2">{t[M.carteiraVsPassado] === "" ? "" : pct(t[M.carteiraVsPassado])} <span className={`tag ${str(t[M.faixa]) === "OK" ? "tag-ok" : str(t[M.faixa]) ? "tag-bad" : "tag-navy"}`}>{str(t[M.faixa]) || "sem carteira"}</span></td>
                 <td className="p-2">{str(t[M.alerta]) && <span className="tag tag-bad">{str(t[M.alerta])}</span>}</td>

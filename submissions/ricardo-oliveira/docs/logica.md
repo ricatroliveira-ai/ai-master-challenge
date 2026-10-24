@@ -27,15 +27,15 @@ A versão completa, com cada decisão e o porquê, é o SOP (abaixo). Aqui, o re
 | 2 | Os outros deals vivos | Ainda dentro do ciclo; nada fecha depois de 138 dias |
 | 3 | Deals antigos em produto entrando na janela ou pouco fora dela (até 30 dias); os muito fora vão pro fim, como recuperação | O dono requalifica em 30 dias ou fecha como perdido |
 | 4 | O resto, produto ainda dentro da janela | Manter contato |
-| Encerrar | Deals atropelados: a conta comprou o mesmo produto de outro vendedor depois de o deal abrir | Fechar como perdido ou juntar ao deal do colega; só reabrir se a conta confirmar outro pedido |
+| Confirmar | Outro vendedor (não o do deal) fechou o mesmo produto na conta depois de o deal abrir | Confirmar com a conta: mesmo pedido (juntar ou fechar como perdido) ou demanda separada (o deal volta pros passos). Nunca encerrar sem perguntar |
 
-Recompra sem deal: pares conta e produto da carteira do vendedor na hora de recomprar e sem nenhum deal limpo aberto (aba `Recompra sem deal`, 263 de 383) entram no Meu dia depois dos vivos, com a ação "abrir o deal e ligar". É o relógio da conta, com ou sem CRM.
+Recompra sem deal: pares conta e produto da carteira do vendedor na hora de recomprar e sem nenhum deal aberto no CRM (aba `Recompra sem deal`, 103 de 383) entram no Meu dia depois dos vivos, com a ação "abrir o deal e ligar" e um botão Feito. Onde já existe um deal a confirmar pro mesmo par, a aba manda confirmar esse deal em vez de abrir outro. É o relógio da conta, com ou sem CRM.
 
 Deals sem conta: cinco por dia (`Hoje!B14`) entram na lista do vendedor depois dos vivos, vivos primeiro e depois pelo preço, com a ação "identificar a conta". Identificada no app, a conta entra em `sales_pipeline!J` e o deal passa a seguir as regras acima.
 
-Cada deal mostra o porquê: o motivo do ICP da conta (receita ou setor contra a regra), o ritmo de recompra daquele produto naquela conta (intervalo médio, número de compras, última compra), a idade do deal contra o ciclo normal e o limite, e, quando a conta comprou o mesmo produto depois de o deal abrir, quantas vezes e com quem. Esse último é o sinal mais forte de deal que não vai fechar que o dataset tem: 470 dos 501 deals abertos em Engaging com conta.
+Cada deal mostra o porquê: o motivo do ICP da conta (receita ou setor contra a regra), o ritmo de recompra daquele produto naquela conta (intervalo médio, número de compras, última compra, e um aviso quando o atraso passa do dobro do ritmo), a idade do deal contra o ciclo normal e o limite, e, quando outro vendedor fechou o mesmo produto na conta depois de o deal abrir, quantas vezes, quem e há quantos dias. Esse último é o sinal mais forte que o dataset tem sobre conta sem dono: 464 dos 501 deals abertos em Engaging com conta (69 dos 89 vivos). O que ele não prova é que o pedido é o mesmo: no backtest esses deals fecharam ganhos em 58% contra 62% dos limpos. Por isso o bloco é Confirmar, não Encerrar.
 
-Só deals limpos entram nos passos 1 a 4. Dentro de cada passo: **urgência da recompra** (dias até a janela; no passo 3 os muito vencidos por último), depois **valor do deal**, depois **tier de ICP**. A regra original era ICP antes de valor; o backtest mostrou 26% mais receita nos 18 primeiros com a mesma taxa de ganho, então inverti (chave em `Hoje!B13`). Deal marcado "feito" hoje vai pro fim da lista de hoje e volta amanhã pelas regras.
+Só deals limpos entram nos passos 1 a 4. Dentro de cada passo: **urgência da recompra** (dias até a janela; no passo 3 os muito vencidos por último), depois **valor do deal**, depois **tier de ICP**. A regra original era ICP antes de valor; o backtest mostrou 26% mais receita nos 18 primeiros com a mesma taxa de ganho, então inverti (chave em `Hoje!B13`). Deal marcado "feito" hoje vai pro fim da lista de hoje (na planilha, pela chave de ordenação; o app só lê) e volta amanhã pelas regras. Deal confirmado como demanda separada sai do bloco Confirmar e volta pros passos.
 
 ## ICP (valor em jogo, não chance de ganhar)
 
@@ -49,8 +49,14 @@ Só deals limpos entram nos passos 1 a 4. Dentro de cada passo: **urgência da r
 - **MEDDPICC:** seis das oito letras não existem no CRM. Virou recomendação de campos.
 - **Win rate por atributo:** não há sinal confiável neste arquivo. Entraria num CRM real.
 - **Especializar GTXPro:** 24 vendedores vendem com a mesma taxa; o time com mais volume tem a menor. Não.
+- **Encerrar deal atropelado sem perguntar:** a compra posterior de outro vendedor não prova que é o mesmo pedido (pode ser outro departamento, outra quantidade, compra recorrente), e o backtest não separa esses deals dos limpos. Virou confirmação, com o campo de "pedido" como recomendação de CRM.
+
+## O backtest, e o que ele pode dizer
+
+Aba `Backtest`, snapshot editável (30/09/2017): 1.401 deals em Engaging com conta abertos naquele dia. Top 18 por vendedor, exato (537 deals em toda ordem, empates desfeitos pela linha). Valor depois de ICP: 239 ganhos e US$ 815 mil. Acaso pareado por vendedor (mesmo N de cada um, com a taxa e a receita média dele): 215 e US$ 650 mil. Só preço: 221 e US$ 905 mil. Mais novo primeiro: 293 e US$ 688 mil. Ordem em uso (urgência, valor, ICP, atropelados no fim): 270 e US$ 624 mil. Leitura exploratória, escrita na própria aba: um snapshot, dado gerado, cortes de 57 e 138 dias calculados no arquivo inteiro, nenhuma prova de causa.
 
 ## Fontes
 
 - SOP completo em português: [`sop-lead-scorer.md`](./sop-lead-scorer.md).
+- Fórmulas e configuração da planilha, aba por aba: [`../solution/sheet`](../solution/sheet).
 - Narrativa do processo: [`../process-log/00-narrativa.md`](../process-log/00-narrativa.md).

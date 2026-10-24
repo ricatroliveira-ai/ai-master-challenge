@@ -1,14 +1,4 @@
----
-type: sop
-date: 2026-10-23
-project: getting-hired
-status: approved
-tags: [getting-hired, g4, lead-scorer, sop, icp, carteira, prioridade]
-skills: []
-sources: ["[[challenge-lead-scorer]]", "[[user_meddpicc_proven]]"]
----
-
-SOP do case [[G4 Educação]] AI Master, Challenge 003 (Lead Scorer). Passo a passo de como a gente sai de 8.800 oportunidades num CRM e chega numa ferramenta que o vendedor abre na segunda de manhã e sabe onde focar. Plano geral e setup do repositório em [[challenge-lead-scorer]]. A versão pra compartilhar com a G4 é um documento vivo: [SOP Lead Scorer G4](https://claude.ai/artifact/XxP2VP2hqy1iDg78LAu1Z6).
+SOP do case G4 Educação AI Master, Challenge 003 (Lead Scorer). Passo a passo de como a gente sai de 8.800 oportunidades num CRM e chega numa ferramenta que o vendedor abre na segunda de manhã e sabe onde focar. Esta é a cópia do SOP que vale pra submissão, atualizada em 24/10 com as decisões da terceira rodada de revisão; o resumo executável está em `logica.md`, e as fórmulas que executam cada regra, em `../solution/sheet/formulas.md`.
 
 ## O problema que estamos resolvendo
 
@@ -125,8 +115,8 @@ O texto do porquê é curto e no idioma do vendedor ("conta parecida com as que 
 - Backtest: montar a lista do dia com os dados até uma data e testar se a ordem coloca os deals que foram ganhos acima dos que foram perdidos depois dela.
 - Se um critério que a gente achava importante não provar nada, ele sai, e isso vai pro process log.
 
-> [!success] Backtest feito na planilha (aba Backtest, 23/10)
-> Snapshot editável; em 30/09/2017: 1.401 deals em Engaging com conta abertos. Dos 169 passados de 138 dias, nenhum fechou depois (nem ganho nem perdido). Entre os vivos, estar na hora de recomprar não muda a taxa de ganho (60% nos passos 1 e 2). Top 18 por vendedor: ordem do SOP (ICP depois valor) 235 ganhos e US$ 648 mil; valor depois ICP 239 e US$ 815 mil; só preço de tabela 221 e US$ 905 mil; mais novo primeiro 298 e US$ 697 mil; acaso 215 e US$ 481 mil. Só deals em Engaging (Prospecting não tem data). Caveat: como nada fecha depois de 138 dias neste arquivo, "mais novo primeiro" é favorecido aqui mais do que seria num CRM real. **Decidido (Rica, 23/10, 'go'):** valor depois ICP. Chave na aba Hoje, B13.
+> [!success] Backtest feito na planilha (aba Backtest, 23/10; refeito 24/10 com top N exato e acaso pareado)
+> Snapshot editável; em 30/09/2017: 1.401 deals em Engaging com conta abertos. Dos 169 passados de 138 dias, nenhum fechou depois (nem ganho nem perdido). Entre os vivos, estar na hora de recomprar não muda a taxa de ganho (60% nos passos 1 e 2). Top 18 por vendedor, exato (537 deals em toda ordem, empates desfeitos pela linha): ordem do SOP original (ICP depois valor) 235 ganhos e US$ 648 mil; valor depois ICP 239 e US$ 815 mil; só preço de tabela 221 e US$ 905 mil; mais novo primeiro 293 e US$ 688 mil; acaso pareado por vendedor (mesmo N de cada um, com a taxa e a receita média dele) 215 e US$ 650 mil; ordem em uso (urgência, valor, ICP, atropelados no fim) 270 e US$ 624 mil. Só deals em Engaging (Prospecting não tem data). Leitura exploratória, escrita na própria aba: um snapshot, dado gerado, cortes de 57 e 138 dias calculados no arquivo inteiro, nenhuma prova de causa. Como nada fecha depois de 138 dias neste arquivo, "mais novo primeiro" é favorecido aqui mais do que seria num CRM real. **Decidido (Rica, 23/10, 'go'):** valor depois ICP. Chave na aba Hoje, B13.
 
 ### Etapa 9. O app (próximo passo)
 O SOP cria o padrão. O app mantém o padrão rodando todo dia, sozinho.
@@ -150,12 +140,16 @@ Cada etapa fecha com um commit e um trecho no process log (`process-log/00-narra
 > - **Daqui pra frente:** só entra deal no CRM com conta, e só na conta que o vendedor é dono. Conta nova (new logo) fica pra outra regra.
 > Aba Open Deals na planilha, com quem trabalha cada deal agora e o dono da conta.
 
-> [!success] Ordem de prioridade travada (Rica, 23/10)
-> 1. Deal vivo (até 138 dias) em produto fora da janela estimada de recompra ou entrando nela em até 30 dias (75).
-> 2. Os outros deals vivos (14).
-> 3. Deals mais antigos em produto entrando na janela de recompra ou pouco fora dela (até 30 dias); os muito fora da janela entram no fim como recuperação (443; o SOP dizia 448, a planilha corrigiu em 23/10). Esse passo cobre a requalificação de 30 dias.
-> 4. O resto, produto ainda dentro da janela (132; o SOP dizia 127).
-> Dentro de cada passo: valor do deal, depois tier de ICP (Rica, 23/10, depois do backtest: 26% mais receita nos 18 primeiros com a mesma taxa de ganho; 'ICP depois valor' era a regra original e fica como opção em Hoje!B13). Primeira passada começa na segunda e todo deal dos passos 1 a 3 é tocado até sexta (cerca de 18 por vendedor). A lista é atualizada todo dia.
+> [!success] Ordem de prioridade travada (Rica, 23/10; revista 24/10)
+> Só deals limpos entram nos passos 1 a 4. Deal limpo = aberto, com conta, e nenhum outro vendedor fechou o mesmo produto nessa conta depois de ele abrir.
+> 1. Deal vivo (até 138 dias) em produto fora da janela estimada de recompra ou entrando nela em até 30 dias (17 em 31/12/2017).
+> 2. Os outros deals vivos (3).
+> 3. Deals mais antigos em produto entrando na janela de recompra ou pouco fora dela (até 30 dias); os muito fora da janela entram no fim como recuperação (137). Esse passo cobre a requalificação de 30 dias.
+> 4. O resto, produto ainda dentro da janela (43).
+> 5. **Confirmar** (464): outro vendedor fechou o mesmo produto na conta depois de o deal abrir. Pode ser o mesmo pedido, já atendido, ou demanda separada (outro departamento, outra quantidade, compra recorrente); os dados não dizem qual, e no backtest esses deals fecharam ganhos em 58% contra 62% dos limpos. Ação: confirmar com a conta. Mesmo pedido: juntar ao deal do colega ou fechar como perdido. Demanda separada: marcar no app e o deal volta pros passos 1 a 4. Nunca encerrar sem perguntar (Rica, 24/10, depois da terceira revisão; a regra de 24/10 de madrugada era "Encerrar" e foi revista).
+> Dentro de cada passo: urgência da recompra (dias até a janela; no passo 3 os muito vencidos por último), depois valor do deal, depois tier de ICP (Rica, 24/10). 'ICP depois valor' era a regra original e fica como opção em Hoje!B13. Deal marcado feito hoje vai pro fim da lista do dia e volta amanhã. Primeira passada começa na segunda e todo deal dos passos 1 a 3 é tocado até sexta (cerca de 18 por vendedor). A lista é atualizada todo dia.
+>
+> **Recompra sem deal (Rica, 24/10):** pares conta e produto da carteira na hora de recomprar e sem nenhum deal aberto no CRM (103 de 383 em 31/12/2017) entram no Meu dia depois dos vivos, com a ação "abrir o deal e ligar" e um Feito. Onde o par já tem um deal a confirmar, a ação é confirmar esse deal, não abrir outro. Quando o atraso da recompra passa do dobro do ritmo, o card avisa que a conta pode ter parado de comprar e manda confirmar antes de contar com ela.
 
 > [!success] Managers reorganizam a carteira do time (Rica, 23/10)
 > A divisão de contas por vendedor é uma sugestão pra RevOps. A fatia de cada time fica fixa; dentro dela, o manager pode trocar o dono das contas, com quatro travas:
@@ -174,6 +168,7 @@ Salvo em 23/10 a pedido do Rica, pra usar na hora de construir o app. O código 
 3. **Deal vivo** (até 138 dias desde o engajamento) fica com o vendedor atual até ganhar ou perder.
 4. **Todo o resto** vai pro dono da conta (modo carteiras). No modo "como está hoje", fica com o vendedor atual. A ordem de prioridade é a mesma nos dois modos.
 5. **Troca feita pelo manager** dentro do próprio time e da faixa de 10% substitui o dono sugerido, e leva os deals abertos da conta junto.
+6. **Deal em que outro vendedor fechou o mesmo produto na conta depois de ele abrir** sai dos passos 1 a 4 e vai pro bloco Confirmar, com quem o trabalha hoje. Confirmada demanda separada, volta pros passos.
 
 ## Decisões em aberto
 - Regra pra distribuir conta nova (proposta: por espaço na carteira e performance) e programa de ramp de 3 meses pros 5 vendedores sem nenhum deal (um em cada time, menos o do Dustin). Propostos, falta aprovar.

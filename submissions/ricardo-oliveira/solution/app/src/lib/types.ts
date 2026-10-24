@@ -25,8 +25,9 @@ export type Config = {
   filaPorDia?: number;
   totais: {
     comConta: number; passo1: number; passo2: number; passo3: number; passo4: number;
-    semConta: number; filaForaDoPrazo: number; encerrar?: number;
+    semConta: number; filaForaDoPrazo: number; confirmar?: number;
   };
+  triggerLigado?: boolean;
 };
 
 // Linhas da planilha chegam como objetos com as colunas como chave (cabeçalhos em PT-BR).
@@ -99,6 +100,8 @@ export const L = {
   ultimaCompra: "Última compra do produto (dias atrás)",
   comprasDepois: "Compras depois de abrir o deal",
   ultimoComprador: "Último comprador",
+  ultimaCompraOutro: "Última compra de outro vendedor (dias atrás)",
+  separado: "Demanda separada confirmada?",
 } as const;
 
 export const F = {
@@ -134,6 +137,7 @@ export const K = {
   fila: "Fila sem conta",
   p1: "Passo 1", p2: "Passo 2", p3: "Passo 3", p4: "Passo 4",
   semana: "Pra tocar até sexta",
+  confirmar: "Confirmar",
 } as const;
 
 export const M = {
@@ -151,6 +155,7 @@ export const M = {
   carteiraVsPassado: "Carteira vs passado",
   faixa: "Checagem da faixa",
   alerta: "Alerta",
+  confirmar: "Confirmar",
 } as const;
 
 export const R = {
@@ -168,4 +173,7 @@ export const R = {
   ordem: "Ordem (por dono)",
   porque: "Por quê",
   acao: "Próxima ação",
+  abertos: "Deals abertos (todos)",
+  feito: "Feito hoje?",
+  dealConfirmar: "Deal a confirmar",
 } as const;

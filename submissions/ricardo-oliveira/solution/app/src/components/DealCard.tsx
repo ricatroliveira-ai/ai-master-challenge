@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { registrar } from "@/lib/actions";
+import { registrar, type Acao } from "@/lib/actions";
 import type { Row } from "@/lib/types";
 import { L } from "@/lib/types";
 import { num, str, bool, usd } from "@/lib/parse";
@@ -22,11 +22,12 @@ export function DealCard({ row, readOnly }: { row: Row; readOnly?: boolean }) {
   const comprasDepois = num(row[L.comprasDepois]);
   const intervalo = str(row[L.intervalo]);
   const ultimaCompra = str(row[L.ultimaCompra]);
+  const separado = bool(row[L.separado]);
 
-  const send = (acao: "feito" | "ganho" | "perdido", v?: number) =>
+  const send = (acao: Acao, v?: number) =>
     start(async () => {
       const r = await registrar(id, acao, v);
-      setMsg(r?.error ? `Erro: ${r.error}` : acao === "feito" ? "Marcado como feito. Vai pro fim da lista de hoje." : `Registrado como ${acao}. Sai da lista.`);
+      setMsg(r?.error ? `Erro: ${r.error}` : acao === "feito" ? "Marcado como feito. Vai pro fim da lista de hoje." : acao === "separado" ? "Demanda separada confirmada. O deal volta pros passos." : `Registrado como ${acao}. Sai da lista.`);
       setAskValue(false);
       // A planilha recalcula em um ou dois segundos; recarrega a lista depois disso.
       if (!r?.error) setTimeout(() => router.refresh(), 2500);
@@ -49,7 +50,8 @@ export function DealCard({ row, readOnly }: { row: Row; readOnly?: boolean }) {
             <span className={`tag ${vivo === "Vivo" ? "tag-ok" : vivo === "Sem data" ? "tag-navy" : "tag-bad"}`}>{vivo}</span>
             <span className={`tag ${recompraTag}`}>{recompra}</span>
             {str(row[L.icp]) && <span className="tag tag-navy">{str(row[L.icp])}</span>}
-            {comprasDepois > 0 && <span className="tag tag-bad">conta já comprou depois de abrir</span>}
+            {comprasDepois > 0 && !separado && <span className="tag tag-bad">outro vendedor fechou depois de abrir</span>}
+            {separado && <span className="tag tag-ok">demanda separada confirmada</span>}
             {feito && <span className="tag tag-ok">feito hoje</span>}
           </div>
         </div>
@@ -61,7 +63,15 @@ export function DealCard({ row, readOnly }: { row: Row; readOnly?: boolean }) {
       </div>
       <p className="mt-3 text-sm"><span className="font-semibold">Por quê.</span> {str(row[L.porque])}</p>
       <p className="mt-1 text-sm"><span className="font-semibold">Próxima ação.</span> {str(row[L.acao])}</p>
-      {!readOnly && (
+      {!readOnly && passo === 5 && (
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <button className="btn-primary" disabled={pending} onClick={() => send("separado")}>Demanda separada: volta pros passos</button>
+          <button className="btn-secondary" disabled={pending} onClick={() => send("perdido")}>Mesmo pedido: fechar como perdido</button>
+          <button className="btn-ghost" disabled={pending || feito} onClick={() => send("feito")}>Feito (confirmação pedida)</button>
+          {msg && <span className="text-xs text-grey">{msg}</span>}
+        </div>
+      )}
+      {!readOnly && passo !== 5 && (
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <button className="btn-primary" disabled={pending || feito} onClick={() => send("feito")}>Feito</button>
           {!askValue ? (

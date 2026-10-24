@@ -1,6 +1,6 @@
 # Process log: narrativa
 
-Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto com os commits.
+Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa. O método (etapas 0 a 7) foi commitado etapa por etapa; o build (dados, Apps Script, app, docs, process log) foi commitado em cinco blocos no fim do dia 23/10, e a terceira rodada de revisão (etapa 16) num bloco próprio em 24/10.
 
 **Ferramenta principal:** Claude Code (Opus), rodando dentro do meu sistema operacional pessoal (um vault Obsidian com meu contexto, regras e histórico de trabalho).
 
@@ -154,6 +154,17 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 
 - Li os cards do app como se fosse um vendedor e metade das legendas era pra mim, não pra ele ("quem segura cada deal hoje", "gasto por conta"). Reescrevi todos em palavras simples: "deals com conta que o seu time está segurando agora, antes de redistribuir"; "quanto cada conta sua comprou em 14 meses". E pedi o que faltava pra um manager de verdade: a taxa de fechamento do time, a de cada vendedor e quantos pontos cada um está acima ou abaixo do time, na tabela do manager, na visão RevOps e no topo do Meu dia de cada vendedor (com a posição dele no time).
 
+
+## Etapa 16: terceira revisão, com o app no ar (24/10)
+
+- Pedi de novo duas revisões independentes (Claude Fable e GPT), agora do produto pronto: repositório, planilha, app no ar, backtest. Nota 8,5 e um "ainda não é 10". Os dois convergiram num ponto que eu tinha decidido errado de madrugada.
+- **O que eu aceitei e mudei.** "A conta comprou o mesmo produto de outro vendedor depois de o deal abrir" não prova que é o mesmo pedido: pode ser outro departamento, outra quantidade, compra recorrente. E o backtest não sustentava a inferência: esses deals fecharam ganhos em 58% contra 62% dos limpos. Eu tinha mandado 470 de 664 deals pra um bloco "Encerrar". Virou "Confirmar": a ação é perguntar pra conta se é o mesmo pedido ou demanda separada. Mesmo pedido: juntar ou fechar como perdido. Demanda separada: um botão no app, e o deal volta pros passos. Os dados dizem onde confirmar; a conta diz o que é.
+- **Onde a IA errou aqui.** A contagem de "outro vendedor" incluía as vendas do próprio vendedor do deal (470 virou 464, e 71 dos 89 vivos virou 69). O ranking do backtest tinha empates, então o "top 18 por vendedor" colocava 545 deals numa ordem e 537 noutra; desempate pela linha, agora 537 em todas. O benchmark de acaso aplicava a média geral a todo mundo; virou acaso pareado por vendedor (mesmo N de cada um, com a taxa e a receita média dele), e a comparação ficou mais dura: o acaso pareado dá US$ 650 mil, não 481 mil, e a ordem em uso ganha mais deals que ele (270 contra 215) mas menos receita (624 mil). Escrevi isso na aba e no README como leitura exploratória, com os cortes de 57 e 138 dias vindo do arquivo inteiro.
+- **Buracos de implementação que o revisor achou e eu fechei.** Feito só reordenava no modo snapshot; a chave de ordenação da planilha agora afunda o deal feito, então o modo conectado faz igual. O bloco Recompra sem deal não tinha Feito, e mandava abrir deal onde já existia um deal a confirmar pro mesmo par (a Vicki via "encerrar o deal da Green-Plus" e "abrir um deal na Green-Plus" pro mesmo produto); agora só entra par sem nenhum deal aberto, e onde há um a confirmar a ação é confirmar esse. Os controles da demo (avançar o dia, zerar, mandar mensagens) mudavam a planilha de todo mundo com um clique; agora pedem a senha de administração, que está no README, e o job diário das 9h fica desligado durante a avaliação pra que o "hoje" bata com o que está escrito.
+- **Reprodutibilidade.** Toda fórmula e toda configuração da planilha foram exportadas pro repositório (`solution/sheet`), aba por aba, célula a célula. Quem não tiver acesso à planilha consegue reconstruir o motor a partir dos CSVs.
+- **O que eu corrigi na minha própria narrativa.** Ela dizia "um commit por etapa", e o build foi commitado em cinco blocos no fim do dia. Corrigi o texto, não o histórico.
+- Script v9, planilha e app atualizados, docs e SOP sincronizados.
+
 ---
 
 ## Onde a IA errou e como corrigi
@@ -162,6 +173,7 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 - O Claude descreveu o ICP pelo valor da conta. Corrigi: ICP é quem é o cliente (desafios, comportamento, perfil). O valor é a evidência de qual perfil compra melhor, não a definição.
 - O Claude disse que os especialistas de GTK ganham 60%. Era a taxa de todos os deals de GTK; a dos especialistas é 65,2%. Pegou na hora de montar a aba de KPIs.
 - Na conversa, misturei GTK 500 (o mais caro, 3 vendedores) com GTXPro (o que mais fatura, 24 vendedores). O Claude separou os dois com a tabela de preços antes de eu decidir em cima do produto errado.
+- A contagem de "a conta comprou depois de abrir" incluía o próprio vendedor do deal; o ranking do backtest tinha empates; o acaso não era pareado por vendedor. Os três saíram da terceira revisão (etapa 16).
 
 ## O que eu adicionei que a IA sozinha não faria
 
@@ -169,3 +181,4 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa, junto 
 - "Ninguém pode perder comissão" como regra de desenho. Foi isso que mudou o critério das carteiras e a regra dos deals vivos.
 - Reorganizar agora em vez de esperar o pipeline zerar, e travar o CRM pra só aceitar deal em conta própria.
 - Dar aos managers a palavra final dentro do time, com travas, em vez de impor a divisão.
+- Voltar atrás numa regra minha quando a revisão e o backtest apontaram o mesmo furo: Encerrar virou Confirmar, porque dado nenhum sabe se duas compras são o mesmo pedido. A conta sabe.

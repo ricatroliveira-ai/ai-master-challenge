@@ -36,7 +36,7 @@ export default async function Manager({ searchParams }: PageProps<"/manager">) {
         <KpiTile label="Deals abertos nas carteiras" value={str(r["Deals com conta (carteiras)"] ?? "")} hint="deals com conta que ficam com o seu time depois da redistribuição proposta" />
         <KpiTile label="Pra trabalhar agora" value={String(num(r["Passo 1"]) + num(r["Passo 2"]))} hint="deals limpos e vivos (passos 1 e 2)" />
         <KpiTile label="Pra requalificar" value={str(r["Passo 3"] ?? "")} hint="deals antigos em conta na hora de recomprar (passo 3)" />
-        <KpiTile label="Pra encerrar" value={String(d.time.reduce((a, t) => a + num(t["Encerrar"]), 0))} hint="a conta já comprou o produto de outro vendedor depois de o deal abrir" />
+        <KpiTile label="Pra confirmar" value={String(d.time.reduce((a, t) => a + num(t[M.confirmar]), 0))} hint="outro vendedor fechou o mesmo produto na conta depois de o deal abrir: mesmo pedido ou demanda separada?" />
         <KpiTile label="Deals sem conta" value={str(r["Fila sem conta"] ?? "")} hint={`${str(r["Fila fora do prazo"] ?? 0)} passaram do prazo de identificar`} />
       </section>
 
@@ -45,7 +45,7 @@ export default async function Manager({ searchParams }: PageProps<"/manager">) {
           <thead className="bg-navy text-offwhite text-left">
             <tr>
               <th className="p-2">Vendedor</th><th className="p-2">Taxa de fechamento</th><th className="p-2">vs time</th><th className="p-2">Abertos hoje</th><th className="p-2">Nas carteiras</th><th className="p-2">Na lista</th>
-              <th className="p-2">P1</th><th className="p-2">P2</th><th className="p-2">P3</th><th className="p-2">P4</th><th className="p-2">Até sexta</th><th className="p-2">Encerrar</th>
+              <th className="p-2">P1</th><th className="p-2">P2</th><th className="p-2">P3</th><th className="p-2">P4</th><th className="p-2">Até sexta</th><th className="p-2">Confirmar</th>
               <th className="p-2">Fila</th><th className="p-2">Vivos em conta de outro</th><th className="p-2">Carteira vs passado</th><th className="p-2">Alerta</th>
             </tr>
           </thead>
@@ -62,7 +62,7 @@ export default async function Manager({ searchParams }: PageProps<"/manager">) {
                   <td className="p-2 font-bold">{str(t[M.naLista])}</td>
                   <td className="p-2">{str(t[M.p1])}</td><td className="p-2">{str(t[M.p2])}</td><td className="p-2">{str(t[M.p3])}</td><td className="p-2">{str(t[M.p4])}</td>
                   <td className="p-2">{str(t[M.semana])}</td>
-                  <td className="p-2">{str(t["Encerrar"])}</td>
+                  <td className="p-2">{str(t[M.confirmar])}</td>
                   <td className="p-2">{str(t[M.fila])}{num(t[M.filaFora]) ? <span className="tag tag-bad ml-1">{str(t[M.filaFora])} fora</span> : null}</td>
                   <td className="p-2">{str(t[M.vivosOutroDono])}</td>
                   <td className="p-2">{t[M.carteiraVsPassado] === "" ? "" : pct(t[M.carteiraVsPassado])} <span className={`tag ${str(t[M.faixa]) === "OK" ? "tag-ok" : str(t[M.faixa]) ? "tag-bad" : "tag-navy"}`}>{str(t[M.faixa]) || "sem carteira"}</span></td>

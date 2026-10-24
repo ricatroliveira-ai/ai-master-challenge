@@ -11,6 +11,8 @@
  * GET  ?action=manager&email=...      visão do manager (time, passos, alertas)
  * GET  ?action=snapshot               tudo de uma vez (o app usa como fallback)
  * POST {action:"activity", token, deal, rep, acao, valor, nota}   grava em Atividades
+ *      acao = feito | ganho | perdido | separado (demanda separada confirmada) | recompra (deal = "Conta|Produto")
+ * POST {action:"trigger", token, on: true|false}   liga ou desliga o job diário das 9h
  * POST {action:"advance", token}      anda o relógio um dia (simulação)
  * POST {action:"reset",   token}      volta o relógio pra 0 e limpa Atividades (demo)
  * POST {action:"notify",  token}      dispara as mensagens do dia agora
@@ -89,8 +91,9 @@ function getConfig() {
       passo4: cell(TABS.hoje, 'B20'),
       semConta: cell(TABS.hoje, 'B21'),
       filaForaDoPrazo: cell(TABS.hoje, 'B22'),
-      encerrar: cell(TABS.hoje, 'B23'),
+      confirmar: cell(TABS.hoje, 'B23'),
     },
+    triggerLigado: ScriptApp.getProjectTriggers().some(t => t.getHandlerFunction() === 'dailyJob'),
   };
 }
 
@@ -111,8 +114,8 @@ function findUser(email) {
   return getUsers().find(u => String(u.email).toLowerCase() === e) || null;
 }
 
-function getLista() { return readTable(TABS.lista, 7, 1, 38); }
-function getRecompra() { return readTable(TABS.recompra, 7, 1, 17); }
+function getLista() { return readTable(TABS.lista, 7, 1, 40); }
+function getRecompra() { return readTable(TABS.recompra, 7, 1, 21); }
 function getContas() {
   return sheet('Books').getRange(4, 1, 85, 1).getValues().map(r => String(r[0])).filter(Boolean).sort();
 }
@@ -213,6 +216,7 @@ function doPost(e) {
       case 'advance': return json(advanceDay());
       case 'reset': return json(resetDemo());
       case 'notify': return json(notifyAll());
+      case 'trigger': return json(setTrigger(body.on === true || body.on === 'true'));
       default: return json({ error: 'ação desconhecida' });
     }
   } catch (err) {
@@ -220,10 +224,14 @@ function doPost(e) {
   }
 }
 
-/** Grava uma linha em Atividades. acao = feito | ganho | perdido. */
+/**
+ * Grava uma linha em Atividades.
+ * acao = feito | ganho | perdido | separado (o vendedor confirmou com a conta que o deal a confirmar é demanda separada)
+ *      | recompra (o vendedor abriu o deal ou ligou pra um par conta e produto da aba Recompra sem deal; deal = "Conta|Produto")
+ */
 function recordActivity(b) {
   const acao = String(b.acao || '').toLowerCase();
-  if (['feito', 'ganho', 'perdido'].indexOf(acao) < 0) return { error: 'acao deve ser feito, ganho ou perdido' };
+  if (['feito', 'ganho', 'perdido', 'separado', 'recompra'].indexOf(acao) < 0) return { error: 'acao deve ser feito, ganho, perdido, separado ou recompra' };
   if (!b.deal || !b.rep) return { error: 'deal e rep são obrigatórios' };
   const hoje = sheet(TABS.hoje).getRange('B4').getValue();
   const valor = acao === 'ganho' ? Number(b.valor || 0) : '';
@@ -291,17 +299,24 @@ function installTrigger() {
   return 'ok';
 }
 
+/** Liga ou desliga o job diário. Desligado durante a avaliação, pra que o "hoje" da demo não ande sozinho. */
+function setTrigger(on) {
+  if (on) { installTrigger(); return { ok: true, triggerLigado: true }; }
+  ScriptApp.getProjectTriggers().forEach(t => { if (t.getHandlerFunction() === 'dailyJob') ScriptApp.deleteTrigger(t); });
+  return { ok: true, triggerLigado: false };
+}
+
 function buildMessage(rep, lista, fila, cfg) {
   const hojeDate = new Date(cfg.hoje + 'T12:00:00');
   const segunda = hojeDate.getDay() === 1;
   const passo = n => lista.filter(r => Number(r['Passo']) === n).length;
-  const top = lista.slice(0, 5).map(r =>
+  const top = lista.filter(r => Number(r['Passo']) !== 5).slice(0, 5).map(r =>
     `${r['Ordem do dia']}. ${r['Conta']} · ${r['Produto']} (US$ ${r['Preço de tabela']}) — ${r['Próxima ação']}`
   ).join('\n');
   const head = segunda
     ? `Bom dia, ${rep}. Sua semana (${cfg.hoje}): ${lista.length} deals na lista, ${passo(1) + passo(2) + passo(3)} pra tocar até sexta.`
     : `Bom dia, ${rep}. Sua lista de ${cfg.hoje}: ${lista.length} deals, ${passo(1)} na hora de recomprar e vivos.`;
-  const passos = `Passo 1 (vivo e na hora de recomprar): ${passo(1)} · Passo 2 (outros vivos): ${passo(2)} · Passo 3 (antigos, conta na hora de recomprar): ${passo(3)} · Passo 4: ${passo(4)}`;
+  const passos = `Passo 1 (vivo e na hora de recomprar): ${passo(1)} · Passo 2 (outros vivos): ${passo(2)} · Passo 3 (antigos, conta na hora de recomprar): ${passo(3)} · Passo 4: ${passo(4)} · Confirmar (outro vendedor fechou o produto depois de abrir): ${passo(5)}`;
   const filaTxt = fila.length ? `\nFila sem conta: ${fila.length} deals (${fila.filter(f => f['Escalada'] === 'Escalar pro manager').length} fora do prazo). Depois dos vivos, identifique a conta.` : '';
   return `${head}\n${passos}\n\nComece por aqui:\n${top}${filaTxt}\n\nAbra o app pra ver o porquê de cada deal e marcar o que fez.`;
 }

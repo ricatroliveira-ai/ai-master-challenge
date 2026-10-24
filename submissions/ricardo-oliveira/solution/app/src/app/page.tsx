@@ -24,6 +24,7 @@ export default async function Home() {
           <li><span className="tag tag-gold">2</span> Os outros deals vivos</li>
           <li><span className="tag tag-gold">3</span> Deals antigos em conta na hora de recomprar</li>
           <li><span className="tag tag-gold">4</span> O resto</li>
+          <li><span className="tag tag-navy">!</span> Confirmar: outro vendedor fechou o produto depois de o deal abrir. Mesmo pedido ou demanda separada? A conta responde, não o dado.</li>
         </ul>
       </div>
       <form action={escolher} className="card p-6 space-y-4">

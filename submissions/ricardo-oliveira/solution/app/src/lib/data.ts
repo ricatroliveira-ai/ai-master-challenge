@@ -75,7 +75,7 @@ function configFromLabels(c: Record<string, string>): Config {
       passo4: num(g("Passo 4: o resto")),
       semConta: num(g("Deals sem conta (fila)")),
       filaForaDoPrazo: num(g("Fila fora do prazo")),
-      encerrar: num(g("Encerrar: comprado por outro vendedor depois de abrir")),
+      confirmar: num(g("Confirmar: a conta comprou de outro vendedor depois de abrir")),
     },
   };
 }
@@ -89,7 +89,10 @@ async function applyLocalActivities(lista: Row[], hoje: string): Promise<Row[]> 
     const a = acts[str(r[L.id])];
     if (!a) { out.push(r); continue; }
     if (a.acao === "ganho" || a.acao === "perdido") continue; // saiu da lista
-    out.push({ ...r, [L.ultimoContato]: hoje, [L.feitoHoje]: true, [L.estado]: "aberto" });
+    if (a.acao === "conta" || a.acao === "recompra") { out.push(r); continue; }
+    // separado: a conta confirmou demanda separada; o deal sai do bloco Confirmar e volta pros passos (aproximação do snapshot)
+    const passo = a.acao === "separado" && num(r[L.passo]) === 5 ? (str(r[L.vivo]) === "Vivo" ? 2 : 4) : num(r[L.passo]);
+    out.push({ ...r, [L.passo]: passo, [L.separado]: a.acao === "separado" ? true : r[L.separado], [L.ultimoContato]: hoje, [L.feitoHoje]: true, [L.estado]: "aberto" });
   }
   // feito hoje vai pro fim da lista do vendedor, mantendo a ordem relativa
   const byRep = new Map<string, Row[]>();
@@ -151,7 +154,10 @@ export async function getRep(email: string): Promise<RepData | null> {
     .filter((r) => str(r[F.vendedor]) === user.nome && !acts[str(r[F.id])])
     .sort((a, b) => num(a[F.ordem]) - num(b[F.ordem]));
   const contas = Array.from(new Set(s.lista.map((r) => str(r[L.conta])).filter(Boolean))).sort();
-  const recompra = (s.recompra ?? []).filter((r) => str(r[R.dono]) === user.nome && bool(r[R.entra])).sort((a, b) => num(a[R.ordem]) - num(b[R.ordem]));
+  const recompra = (s.recompra ?? [])
+    .filter((r) => str(r[R.dono]) === user.nome && bool(r[R.entra]))
+    .map((r) => (acts[`${str(r[R.conta])}|${str(r[R.produto])}`]?.acao === "recompra" ? { ...r, [R.feito]: true } : r))
+    .sort((a, b) => (bool(a[R.feito]) === bool(b[R.feito]) ? num(a[R.ordem]) - num(b[R.ordem]) : bool(a[R.feito]) ? 1 : -1));
   const kpisTime = s.kpis.filter((r) => str(r["Manager"]) === user.manager);
   return { user, config, kpi, kpisTime, lista, fila, recompra, contas, modo: "snapshot" };
 }

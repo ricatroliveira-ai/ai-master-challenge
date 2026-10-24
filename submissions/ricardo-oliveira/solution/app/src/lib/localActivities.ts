@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 // Só no modo snapshot: guarda o que o vendedor marcou num cookie, pra demo funcionar sem a planilha.
 const NAME = "ls_acts";
-export type LocalAct = { acao: "feito" | "ganho" | "perdido" | "conta"; valor?: number; conta?: string };
+export type LocalAct = { acao: "feito" | "ganho" | "perdido" | "separado" | "conta" | "recompra"; valor?: number; conta?: string };
 
 export async function readLocalActivities(): Promise<Record<string, LocalAct>> {
   try {

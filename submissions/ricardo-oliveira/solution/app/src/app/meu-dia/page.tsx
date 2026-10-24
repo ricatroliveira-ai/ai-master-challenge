@@ -38,7 +38,7 @@ export default async function MeuDia() {
       </div>
 
       <section className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <KpiTile label="Deals na sua lista" value={str(k[K.abertos] ?? lista.length)} hint={`${passo(1).length + passo(2).length + passo(3).length} pra trabalhar até sexta · ${passo(5).length} pra encerrar`} />
+        <KpiTile label="Deals na sua lista" value={str(k[K.abertos] ?? lista.length)} hint={`${passo(1).length + passo(2).length + passo(3).length} pra trabalhar até sexta · ${passo(5).length} pra confirmar`} />
         <KpiTile label="Sua taxa de fechamento" value={pct(minhaTaxa)} hint={`time ${pct(tTime)} · você ${pontos(minhaTaxa - tTime)}${posicao ? ` · ${posicao.pos}º de ${posicao.de}` : ""}`} />
         <KpiTile label="Deals ganhos" value={str(k[K.ganhos] ?? "")} hint="nos 14 meses, mais os que você fechou aqui" />
         <KpiTile label="Deals perdidos" value={str(k[K.perdidos] ?? "")} hint={`${str(k[K.fechados] ?? "")} fechados no total`} />
@@ -59,7 +59,7 @@ export default async function MeuDia() {
           <div className="flex items-baseline gap-3 mb-3">
             <h2 className="text-xl font-extrabold">Recompra sem deal: abrir e ligar</h2>
             <span className="tag tag-gold">{d.recompra.length}</span>
-            <span className="text-xs text-grey">Contas suas na hora de recomprar um produto, sem nenhum deal limpo aberto. O relógio da conta, com ou sem CRM.</span>
+            <span className="text-xs text-grey">Contas suas na hora de recomprar um produto, sem nenhum deal aberto no CRM. O relógio da conta, com ou sem CRM. Marque feito quando abrir o deal ou ligar.</span>
           </div>
           <div className="grid gap-3">{d.recompra.map((r) => <RecompraCard key={`${str(r["Conta"])}|${str(r["Produto"])}`} row={r} />)}</div>
         </section>
@@ -77,7 +77,7 @@ export default async function MeuDia() {
 
       <Bloco titulo="Depois" sub={`Deals antigos em conta na hora de recomprar. Requalificar em ${d.config.requalificacaoDias} dias ou fechar como perdido.`} rows={passo(3)} />
       <Bloco titulo="O resto" sub="Produto ainda dentro da janela. Mantenha contato." rows={passo(4)} />
-      <Bloco titulo="Encerrar: comprado por outro vendedor depois de abrir" sub="A conta já comprou este produto de um colega depois de o deal abrir. Não é venda, é limpeza: fechar como perdido ou juntar." rows={passo(5)} />
+      <Bloco titulo="Confirmar: outro vendedor fechou o produto depois de o deal abrir" sub="Pode ser o mesmo pedido, já atendido por um colega, ou demanda separada. Os dados não dizem qual: confirme com a conta antes de encerrar. Demanda separada confirmada volta pros passos." rows={passo(5)} />
     </div>
   );
 }

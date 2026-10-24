@@ -1,4 +1,4 @@
-# Configuração da aba `Hoje` (valores em 24/10/2026)
+# Configuração da aba `Hoje` (valores em 23/10/2026)
 Células azuis são entradas; o resto é fórmula (ver `formulas.md`). O app lê B2:B26 pela API.
 | Célula | Rótulo | Valor | Nota |
 |---|---|---|---|
@@ -14,7 +14,7 @@ Células azuis são entradas; o resto é fórmula (ver `formulas.md`). O app lê
 | B10 | Prazo da fila sem conta (dias úteis) | 10 | Contado a partir do fim dos dados. |
 | B11 | Requalificação de deal passado do ciclo (dias) | 30 |  |
 | B12 | Deals por vendedor na primeira passada (seg a sex) | 18 | Usado no backtest como top N. |
-| B13 | Ordem dentro do passo | Valor depois ICP | Invertido em 23/10 depois do backtest (26% mais receita nos 18 primeiros, mesma taxa de ganho). 'ICP depois valor' era a regra original e continua disponível. |
+| B13 | Ordem dentro do passo | Valor depois ICP | Desempate depois da urgência da recompra: cada passo ordena primeiro pelos dias até a janela e só então por esta chave. 'Valor depois ICP' entrou em 23/10: no backtest, sem a urgência na frente, deu 26% mais receita que 'ICP depois valor' nos 18 primeiros, com a mesma taxa de ganho. Com a urgência na frente, a ordem em uso ganha mais deals e menos receita (aba Backtest). 'ICP depois valor' continua disponível. |
 | B14 | Deals sem conta por dia (no Meu dia) | 5 | Quantos deals da fila aparecem na lista do vendedor por dia, depois dos vivos. Identificou a conta no app, o deal entra na lista pelas regras. |
 | B15 | Resumo de hoje |  |  |
 | B16 | Deals abertos com conta (Lista do Dia) | 664 |  |
@@ -29,4 +29,4 @@ Células azuis são entradas; o resto é fórmula (ver `formulas.md`). O app lê
 | B25 | E-mail que recebe as mensagens diárias na demo | (e-mail do dono da demo) | Na demo, todas as mensagens dos vendedores vão pra este endereço, com o nome do vendedor no assunto. |
 | B26 | Slack webhook (opcional) |  | Se preenchido, o job diário também posta no Slack. |
 
-Entradas (azuis): B3 (dias passados, o relógio), B7, B8, B9 (modo de dono: Carteiras ou Como está hoje), B10, B11, B12, B13 (ordem dentro do passo), B14, B25 (e-mail da demo), B26 (webhook do Slack, opcional). Tudo o mais recalcula.
+Entradas (azuis): B3 (dias passados, o relógio), B7, B8, B9 (modo de dono: Carteiras ou Como está hoje), B10, B11, B12, B13 (desempate dentro do passo, depois da urgência), B14, B25 (e-mail da demo), B26 (webhook do Slack, opcional). Tudo o mais recalcula.

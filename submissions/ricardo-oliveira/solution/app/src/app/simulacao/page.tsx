@@ -23,7 +23,7 @@ export default async function Simulacao() {
       </div>
       <SimulacaoControls live={isLive()} triggerLigado={c.triggerLigado} />
       <div className="text-xs text-grey">
-        Regras em uso: ciclo normal {c.cicloNormal} dias · deal ganho mais longo {c.cicloMaisLongo} dias · janela de recompra {c.janelaEntrando} dias · modo de dono {c.modoDono} · ordem dentro do passo: {c.ordemDentroDoPasso}.
+        Regras em uso: ciclo normal {c.cicloNormal} dias · deal ganho mais longo {c.cicloMaisLongo} dias · janela de recompra {c.janelaEntrando} dias · modo de dono {c.modoDono} · ordem dentro do passo: urgência da recompra, depois {c.ordemDentroDoPasso === "ICP depois valor" ? "ICP, depois valor" : "valor, depois ICP"}.
       </div>
     </div>
   );

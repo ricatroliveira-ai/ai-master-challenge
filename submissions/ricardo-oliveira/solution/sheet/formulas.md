@@ -1,5 +1,5 @@
 # Fórmulas da planilha `sales_pipeline`, aba por aba
-Exportado da planilha em 24/10/2026 pela API do Google Sheets (userEnteredValue). Cada aba lista as células com fórmula. Fórmulas iguais preenchidas pra baixo aparecem uma vez, com `{r}` no lugar do número da própria linha e o intervalo de linhas em que valem. Textos de cabeçalho e notas estão em `config.md` quando são configuração; aqui ficam só fórmulas e os rótulos que ajudam a ler. Separador de argumentos `;` e de colunas `\` (planilha em pt-BR).
+Exportado da planilha em 23/10/2026 pela API do Google Sheets (userEnteredValue). Cada aba lista as células com fórmula. Fórmulas iguais preenchidas pra baixo aparecem uma vez, com `{r}` no lugar do número da própria linha e o intervalo de linhas em que valem. Textos de cabeçalho e notas estão em `config.md` quando são configuração; aqui ficam só fórmulas e os rótulos que ajudam a ler. Separador de argumentos `;` e de colunas `\` (planilha em pt-BR).
 Reconstrução: crie uma planilha em pt-BR com as abas na ordem abaixo, cole os quatro CSVs nas abas `sales_pipeline`, `accounts`, `sales_teams` e `Products` (com o nome do pipeline na coluna A de Products), cole as fórmulas nas células indicadas e preencha as entradas de `config.md` na aba `Hoje`.
 
 ## Hoje

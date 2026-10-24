@@ -1,6 +1,6 @@
 # Process log: narrativa
 
-Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa. O método (etapas 0 a 7) foi commitado etapa por etapa; o build (dados, Apps Script, app, docs, process log) foi commitado em cinco blocos no fim do dia 23/10, e a terceira rodada de revisão (etapa 16) num bloco próprio em 24/10.
+Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa. O método (etapas 0 a 7) foi commitado etapa por etapa; o build (dados, Apps Script, app, docs, process log) foi commitado em cinco blocos no fim do dia 23/10, e a terceira rodada de revisão (etapa 16) num bloco próprio logo depois, no mesmo dia.
 
 **Ferramenta principal:** Claude Code (Opus), rodando dentro do meu sistema operacional pessoal (um vault Obsidian com meu contexto, regras e histórico de trabalho).
 
@@ -98,7 +98,7 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa. O mét
 - Antes de abrir o app, pedi duas revisões do que tinha até aqui, de dois modelos diferentes (Claude Fable e GPT), com a instrução explícita de discordar. Nota: 7 e 8 de 10. As duas convergiram nos mesmos pontos: o teto de 138 dias é igual pros ganhos e pros perdidos, então é propriedade do arquivo e não lei de vendas; a lista tem que funcionar mesmo se a RevOps não aprovar a redistribuição de carteiras; os 1.425 deals sem conta não podem ficar estacionados; o backtest vem antes da interface; e o app não é "a parte fácil".
 - O que eu aceitei: nota sobre o dataset; reescrever a dor número um (deal que morre, morre em duas semanas; o desperdício está nos deals passados de 138 dias, não nos vivos mais velhos); trocar "vencido" por "fora da janela estimada de recompra" e "parado" por "aberto há X dias", porque o CRM não tem data de último contato; "ninguém perde comissão" vira meta com checagem de carga no piloto; os 209 deals vivos sem conta seguem a mesma regra dos 82 (ficam com quem está neles); identificar a conta é tarefa de todo dia, mas depois dos deals vivos.
 - O que eu não aceitei: tirar o login por e-mail do app (quero mostrar que construo, não só que escrevo) e abandonar a proposta de carteiras. A redistribuição fica como aposta explícita, com a ferramenta rodando nos dois modos (como está hoje e com carteiras) pra RevOps comparar.
-- Onde a IA errou: a primeira revisão me descontou por "tempo gasto" assumindo que foi um dia corrido; foi em várias sessões, dentro do orçamento de 4 a 6 horas. E o SOP trazia 448 e 127 nos passos 3 e 4; a planilha, montada em fórmula, deu 443 e 132 (75 + 443 = 518, que é o número de deals em pares na hora de recomprar que o documento já citava). Corrigi o SOP pela planilha.
+- Onde a IA errou: o SOP trazia 448 e 127 nos passos 3 e 4; a planilha, montada em fórmula, deu 443 e 132 (75 + 443 = 518, que é o número de deals em pares na hora de recomprar que o documento já citava). Corrigi o SOP pela planilha.
 
 ## Etapa 9: o motor na planilha (23/10)
 
@@ -132,7 +132,7 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa. O mét
 - Detalhe pego na hora de testar a tela nova: a API devolvia os seis managers duas vezes (a leitura da aba `KPIs Vendedor` já incluía as linhas deles e o código somava de novo). Versão 3 do script. E a lista de vendedores passou a ficar um minuto em cache no app, porque cada página fazia duas idas à planilha.
 - O que entra com a aprovação da RevOps, e está no README: login da empresa (SSO) e permissão por papel, cada vendedor vê só a sua lista, cada manager só o time. O app já separa os dados por pessoa; falta só a porta.
 
-## Etapa 13: o porquê de verdade (23/10, de madrugada)
+## Etapa 13: o porquê de verdade (23/10, noite)
 
 - Olhando um card real (Treequote, GTX Plus Pro, "entra na janela em 23 dias", "deal aberto há 92 dias") eu não consegui responder qual dos dois mandava. Pedi os dados do deal: aberto em 30/09; desde então a conta comprou GTX Plus Pro cinco vezes, de três vendedores diferentes, a última ontem. O deal não está esfriando: foi atropelado. No pipeline inteiro, 470 dos 501 deals abertos em Engaging com conta têm esse padrão (71 dos 89 vivos). Esse é o sinal de "deal que não vai fechar" que o brief pede e que a idade sozinha não mostrava.
 - Mudanças que pedi e entraram: cada card mostra por que a conta é ICP 1, 2 ou 3 (a receita ou o setor contra a regra), o ritmo de recompra daquele produto naquela conta (intervalo médio, quantas compras, última compra), a idade contra o ciclo normal e o limite, e o aviso "a conta comprou X vezes depois deste deal abrir, a última com fulano", com a ação virando "confirmar se ainda é real". Os deals sem conta entram na lista do vendedor, cinco por dia depois dos vivos, com um campo pra registrar a conta; identificada, ela entra na planilha e o deal segue as regras.
@@ -141,7 +141,7 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa. O mét
 - Depois de ler o card eu quis a história inteira, não três frases: o porquê agora diz quantas vezes a conta comprou aquele produto no período, de quem (nomes), o ritmo e quantos vendedores diferentes venderam o mesmo produto pra mesma conta, e fecha com uma leitura em uma frase ("o pedido deste deal provavelmente já foi atendido por um colega; o registro ficou pra trás"). A ação começa pela confirmação com o cliente, citando quem fechou e há quantos dias.
 - E o logo: o emblema da G4 de verdade (SVG do site) no lugar do círculo com "G4".
 
-## Etapa 14: o deal atropelado não é prioridade (24/10, madrugada)
+## Etapa 14: o deal atropelado não é prioridade (23/10, noite)
 
 - Fechei a decisão que tinha deixado aberta: um deal cujo produto a conta já comprou de outro vendedor depois de ele abrir não vai pra frente da fila. O cliente já comprou. Esse deal tem prioridade de perdido, não de venda. Ele sai dos passos 1 a 4 e vai pro fim da lista, num bloco Encerrar, com a ação de fechar como perdido ou juntar ao deal do colega.
 - A consequência apareceu nos números antes de eu mexer: dos 664 deals abertos com conta, 470 são atropelados. Sobram 16 no passo 1, 2 no passo 2, 133 no passo 3 e 43 no passo 4. O pipeline real tem 194 deals; o resto é limpeza. A lista tem que mostrar isso, não esconder.
@@ -150,14 +150,14 @@ Diário de como eu e a IA chegamos na solução. Atualizado a cada etapa. O mét
 - O que o backtest disse, e eu registrei mesmo não sendo a favor: neste arquivo os atropelados ainda fecharam quase como os limpos (58% contra 63% no snapshot de 30/09), porque o dado gerado não sabe que o pedido já foi atendido. A nova ordem ganha mais deals nos 18 primeiros (264 contra 239) e menos receita (US$ 624 mil contra 815 mil). A regra é de operação comercial, não do backtest, e está escrita assim no SOP e no documento.
 - Fechei também o bônus do brief: uma visão RevOps com todos os times e filtro por manager e região. Com login da empresa, só RevOps e diretoria veriam essa página.
 
-## Etapa 15: os cards em português de vendedor (24/10)
+## Etapa 15: os cards em português de vendedor (23/10, noite)
 
 - Li os cards do app como se fosse um vendedor e metade das legendas era pra mim, não pra ele ("quem segura cada deal hoje", "gasto por conta"). Reescrevi todos em palavras simples: "deals com conta que o seu time está segurando agora, antes de redistribuir"; "quanto cada conta sua comprou em 14 meses". E pedi o que faltava pra um manager de verdade: a taxa de fechamento do time, a de cada vendedor e quantos pontos cada um está acima ou abaixo do time, na tabela do manager, na visão RevOps e no topo do Meu dia de cada vendedor (com a posição dele no time).
 
 
-## Etapa 16: terceira revisão, com o app no ar (24/10)
+## Etapa 16: terceira revisão, com o app no ar (23/10, noite)
 
-- Pedi de novo duas revisões independentes (Claude Fable e GPT), agora do produto pronto: repositório, planilha, app no ar, backtest. Nota 8,5 e um "ainda não é 10". Os dois convergiram num ponto que eu tinha decidido errado de madrugada.
+- Pedi de novo duas revisões independentes (Claude Fable e GPT), agora do produto pronto: repositório, planilha, app no ar, backtest. Nota 8,5 e um "ainda não é 10". Os dois convergiram num ponto que eu tinha decidido errado poucas horas antes.
 - **O que eu aceitei e mudei.** "A conta comprou o mesmo produto de outro vendedor depois de o deal abrir" não prova que é o mesmo pedido: pode ser outro departamento, outra quantidade, compra recorrente. E o backtest não sustentava a inferência: esses deals fecharam ganhos em 58% contra 62% dos limpos. Eu tinha mandado 470 de 664 deals pra um bloco "Encerrar". Virou "Confirmar": a ação é perguntar pra conta se é o mesmo pedido ou demanda separada. Mesmo pedido: juntar ou fechar como perdido. Demanda separada: um botão no app, e o deal volta pros passos. Os dados dizem onde confirmar; a conta diz o que é.
 - **Onde a IA errou aqui.** A contagem de "outro vendedor" incluía as vendas do próprio vendedor do deal (470 virou 464, e 71 dos 89 vivos virou 69). O ranking do backtest tinha empates, então o "top 18 por vendedor" colocava 545 deals numa ordem e 537 noutra; desempate pela linha, agora 537 em todas. O benchmark de acaso aplicava a média geral a todo mundo; virou acaso pareado por vendedor (mesmo N de cada um, com a taxa e a receita média dele), e a comparação ficou mais dura: o acaso pareado dá US$ 650 mil, não 481 mil, e a ordem em uso ganha mais deals que ele (270 contra 215) mas menos receita (624 mil). Escrevi isso na aba e no README como leitura exploratória, com os cortes de 57 e 138 dias vindo do arquivo inteiro.
 - **Buracos de implementação que o revisor achou e eu fechei.** Feito só reordenava no modo snapshot; a chave de ordenação da planilha agora afunda o deal feito, então o modo conectado faz igual. O bloco Recompra sem deal não tinha Feito, e mandava abrir deal onde já existia um deal a confirmar pro mesmo par (a Vicki via "encerrar o deal da Green-Plus" e "abrir um deal na Green-Plus" pro mesmo produto); agora só entra par sem nenhum deal aberto, e onde há um a confirmar a ação é confirmar esse. Os controles da demo (avançar o dia, zerar, mandar mensagens) mudavam a planilha de todo mundo com um clique; agora pedem a senha de administração, que está no README, e o job diário das 9h fica desligado durante a avaliação pra que o "hoje" bata com o que está escrito.

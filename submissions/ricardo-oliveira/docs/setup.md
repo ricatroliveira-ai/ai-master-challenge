@@ -24,7 +24,7 @@ Sem acesso à planilha: toda fórmula e toda configuração estão em [`../solut
 
 ## 2. O Apps Script (API e job diário)
 
-Código em [`../solution/apps-script`](../solution/apps-script). Vinculado à planilha, publicado em 24/10/2026 como app da web (versão 9). O app em produção já aponta pra ele. O job das 9h (America/Sao_Paulo) anda o relógio e manda as mensagens por e-mail; fica desligado durante a avaliação e liga pela página Simulação, com a senha de administração.
+Código em [`../solution/apps-script`](../solution/apps-script). Vinculado à planilha, publicado em 23/10/2026 como app da web (versão 9). O app em produção já aponta pra ele. O job das 9h (America/Sao_Paulo) anda o relógio e manda as mensagens por e-mail; fica desligado durante a avaliação e liga pela página Simulação, com a senha de administração.
 
 Pela interface: abra a planilha, Extensões > Apps Script, cole `Code.gs` e `appsscript.json` (ative "Mostrar o arquivo de manifesto" nas configurações), rode `setToken('um-token-seu')` uma vez e `installTrigger()` uma vez (agenda o job das 9h), depois Implantar > Nova implantação > App da Web, executar como você, acesso "Qualquer pessoa". Copie a URL.
 

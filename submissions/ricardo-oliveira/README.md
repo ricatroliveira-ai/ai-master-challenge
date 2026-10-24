@@ -97,7 +97,6 @@ A narrativa completa, etapa por etapa, está em [`process-log/00-narrativa.md`](
 - "Os especialistas de GTK ganham 60%" era a taxa de todos os deals de GTK; a dos especialistas é 65,2%.
 - Eu mesmo misturei GTK 500 com GTXPro numa decisão; a IA separou os dois com a tabela de preços antes de eu decidir em cima do produto errado.
 - O SOP trazia 448 e 127 nos passos 3 e 4; a planilha em fórmula deu 443 e 132. Corrigi o SOP pela planilha.
-- A revisão me descontou por "tempo gasto" assumindo um dia corrido. Foi em várias sessões, dentro do orçamento.
 - Fórmulas com intervalo aberto (`$J$2:$J`) sobre resultados de `MAP` devolviam vazio na `Lista do Dia`; o lookup escalar funcionava. Intervalo fechado resolveu. A IA demorou três tentativas pra isolar.
 - A contagem de "a conta comprou depois de abrir" incluía as vendas do próprio vendedor do deal. Um revisor pegou; a fórmula passou a excluir o vendedor do deal (470 virou 464).
 - O ranking do backtest tinha empates: o "top 18 por vendedor" colocava 545 deals numa ordem e 537 noutra. Desempate pela linha; agora são 537 em todas.

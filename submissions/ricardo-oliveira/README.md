@@ -4,7 +4,7 @@
 
 - **Nome:** Ricardo Trevizan Rodrigues de Oliveira
 - **LinkedIn:** https://www.linkedin.com/in/ricatroliveira/
-- **Challenge escolhido:** 003 — Lead Scorer (Vendas / RevOps)
+- **Challenge escolhido:** 003, Lead Scorer (Vendas / RevOps)
 
 ---
 

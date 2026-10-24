@@ -126,4 +126,4 @@ A narrativa completa, etapa por etapa, está em [`process-log/00-narrativa.md`](
 
 ---
 
-_Submissão enviada em: 24/10/2026_
+_Submissão enviada em: 23/10/2026_

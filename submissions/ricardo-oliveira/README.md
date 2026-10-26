@@ -66,6 +66,21 @@ Construí uma lista do dia por vendedor que sai de 8.800 oportunidades e diz, de
 
 > **Este bloco é obrigatório.** Sem ele, a submissão é desclassificada.
 
+### Quem decidiu o quê
+
+**O que eu levei antes de abrir a IA.** O ângulo (prioridade não é probabilidade) e uma regra: nenhuma variável entra no score sem provar, nos deals fechados, que mexe na taxa de ganho.
+
+**Hipóteses minhas que eu mandei testar, e o que os dados disseram:**
+- O jogo é upsell e cross-sell na conta. Não: 88% dos ganhos são recompra de produto que a conta já tinha.
+- Deal sem conta é new logo. Não: nenhuma conta nova fechou em 14 meses, é furo de cadastro. A regra virou "identificar a conta".
+- Especializar o GTXPro como o GTK 500. Não: 24 vendedores vendem GTXPro com a mesma taxa de ganho. Ficou só o GTK.
+
+**Onde eu corrigi ou travei a IA:** ela descreveu o ICP pelo valor da conta, e eu reposicionei (ICP é quem é o cliente, o valor é a evidência). A minha regra de comissão derrubou a primeira divisão de carteiras dela, que dava o mesmo valor pra todo mundo (Darcel cairia 71%); o critério virou o histórico de cada vendedor.
+
+**Onde eu recusei a IA:** a revisão pediu pra abandonar as carteiras. Mantive como aposta explícita, com o app rodando nos dois modos pra RevOps comparar.
+
+**Onde a IA me corrigiu e eu aceitei:** eu misturei GTK 500 com GTXPro numa decisão; o teto de 138 dias é do arquivo, não lei de vendas; "Encerrar" virou "Confirmar"; e o backtest inverteu a minha ordem de ICP antes de valor. Trechos da conversa em [`process-log/screenshots`](./process-log/screenshots) (arquivos `ia-*`).
+
 ### Ferramentas usadas
 
 | Ferramenta | Para que usou |
@@ -116,7 +131,8 @@ A narrativa completa, etapa por etapa, está em [`process-log/00-narrativa.md`](
 
 ## Evidências
 
-- [x] Screenshots do app em uso: [`process-log/screenshots`](./process-log/screenshots)
+- [x] Screenshots do app em uso: [`process-log/screenshots`](./process-log/screenshots) (arquivos `app-*`)
+- [x] Screenshots das interações com a IA e do arco de commits: [`process-log/screenshots`](./process-log/screenshots) (arquivos `ia-*`, trechos literais do chat export e saída do `git log`)
 - [ ] Screen recording do workflow
 - [x] Chat export: [`process-log/chat-exports`](./process-log/chat-exports)
 - [x] Git history (código e process log na branch `submission/ricardo-oliveira`)
